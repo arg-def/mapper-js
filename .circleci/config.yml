@@ -1,0 +1,97 @@
+version: 2
+
+defaults: &build-image
+  docker:
+    - image: circleci/node:8.9.1
+
+jobs:
+  install:
+    <<: *build-image
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - dot-notation-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - dot-notation-
+
+      - run: npm install
+      - run:
+         name: Run Tests
+         command: npm run test
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: dot-notation-{{ checksum "package.json" }}
+
+      - persist_to_workspace:
+          root: .
+          paths: .
+
+  lint:
+    <<: *build-image
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run lint
+
+  test:
+    <<: *build-image
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run test
+
+  build:
+    <<: *build-image
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run build
+
+  publish:
+    <<: *build-image
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ./.npmrc
+      - run:
+          name: Publish package
+          command: npm publish --access public
+
+workflows:
+  version: 2
+  test-build-deploy:
+    jobs:
+      - install
+      - lint:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /^v.*/
+      - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /^v.*/
+      - build:
+          requires:
+            - install
+      - publish:
+          requires:
+            - test
+            - lint
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/

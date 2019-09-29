@@ -1,0 +1,82 @@
+{
+  "name": "@arg-def/mapper-js",
+  "version": "0.1.0",
+  "description": "Fast, reliable and intuitive object mapping.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "authors": "echo 'Dot-notation is authored by: \n' > AUTHORS.md | git log --format='* %aN <%aE>' | sort -u >> AUTHORS.md",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "postversion": "git push && git push --tags",
+    "release": "standard-version",
+    "commit": "npx git-cz",
+    "build": "npm run clean && npm run authors && babel src -d lib --extensions '.ts' && tsc --declaration --emitDeclarationOnly",
+    "clean": "rm -rf lib",
+    "test": "jest --no-cache",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint --ext ts src || exit 0",
+    "lint:fix": "npm run lint:js --  --fix || exit 0",
+    "prettier": "prettier -c --write 'src/**/*'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arg-def/mapper-js.git"
+  },
+  "keywords": [
+    "object-mapping",
+    "mapping",
+    "javascript",
+    "dot-notation",
+    "es6",
+    "ecma-script"
+  ],
+  "author": "Marcos Gonçalves <contact@themgoncalves.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arg-def/mapper-js/issues"
+  },
+  "homepage": "https://github.com/arg-def/mapper-js#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-typescript": "^7.6.0",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@types/chai": "^4.2.3",
+    "@types/expect": "^1.20.4",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.8",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
+    "chai": "^4.2.0",
+    "commitizen": "^4.0.3",
+    "commitlint": "^8.2.0",
+    "cz-conventional-changelog": "3.0.2",
+    "eslint": "6.1.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-filenames": "^1.3.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "prettier": "1.18.2",
+    "standard-version": "^7.0.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "@arg-def/dot-notation": "^0.1.2",
+    "core-js": "^3.2.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
