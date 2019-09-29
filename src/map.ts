@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { pick } from '@arg-def/dot-notation';
 
 import { ISource } from './interfaces';

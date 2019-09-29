@@ -1,3 +1,4 @@
+/* eslint-disable filenames/match-exported */
 import { IMap } from './map';
 import mapper from './mapper';
 import { ISource, IMapper, IMapping } from './interfaces';
