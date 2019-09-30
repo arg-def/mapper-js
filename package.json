@@ -12,7 +12,7 @@
     "postversion": "git push && git push --tags",
     "release": "standard-version",
     "commit": "npx git-cz",
-    "build": "npm run clean && babel src -d lib --extensions '.ts' && tsc --declaration --emitDeclarationOnly",
+    "build": "npm run clean && babel src -d lib --extensions '.ts' --ignore '**/*.test.ts' && tsc --declaration --emitDeclarationOnly",
     "clean": "rm -rf lib",
     "test": "jest --no-cache",
     "test:watch": "jest --watch",
