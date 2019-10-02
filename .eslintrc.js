@@ -9,20 +9,25 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
+    'plugin:jest/recommended',
     'eslint-config-prettier',
   ],
-  plugins: ['@typescript-eslint', 'prettier', 'filenames'],
+  plugins: ['@typescript-eslint', 'prettier', 'filenames', 'jest'],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
     ecmaFeatures: {
-      "jsx": false
-    }
+      jsx: false,
+    },
   },
   rules: {
+    'array-callback-return': 'error',
+    'block-scoped-var': 'error',
+    camelcase: ['error', { properties: 'always' }],
     'consistent-return': 'off',
-    "filenames/match-regex": ['error', '^[a-z0-9-]+?$', true],
-    "filenames/match-exported": ['error', 'kebab', null, true ],
+    'default-case': 'error',
+    'filenames/match-regex': ['error', '^[a-z0-9-]+(.test)?$', true],
+    'filenames/match-exported': ['error', 'kebab', null, true],
     'filenames/no-index': 'off',
     // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
     'import/default': 'error',
@@ -69,6 +74,13 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/unambiguous': 'off',
     'import/no-useless-path-segments': 'off',
+    'max-depth': ['error', 4],
+    'max-len': ['error', { code: 120, tabWidth: 2, comments: 120 }],
+    'no-template-curly-in-string': 'error',
+    'no-plusplus': 'error',
+    'no-duplicate-imports': 'error',
+    'prefer-rest-params': 'error',
+    'no-unused-vars': 'error',
     'no-cond-assign': ['error', 'except-parens'],
     'prettier/prettier': ['error'],
     '@typescript-eslint/explicit-function-return-type': [
@@ -80,7 +92,7 @@ module.exports = {
     ],
     '@typescript-eslint/interface-name-prefix': ['error', 'always'],
     '@typescript-eslint/no-explicit-any': [
-      'warn',
+      'error',
       {
         ignoreRestArgs: true,
       },
@@ -88,10 +100,10 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/**/**.scss.d.ts'],
+      files: ['src/**/**.test.ts'],
       rules: {
-        '@typescript-eslint/interface-name-prefix': 'off',
-      },
-    },
+        '@typescript-eslint/explicit-function-return-type': 'off'
+      }
+    }
   ],
 };

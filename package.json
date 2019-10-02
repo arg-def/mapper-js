@@ -17,8 +17,8 @@
     "test": "jest --no-cache",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint --ext ts src || exit 0",
-    "lint:fix": "npm run lint:js --  --fix || exit 0",
+    "lint": "eslint './src/**/*.ts' || exit 0",
+    "lint:fix": "npm run lint --  --fix || exit 0",
     "prettier": "prettier -c --write 'src/**/*'"
   },
   "repository": {
@@ -61,6 +61,7 @@
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.5",
