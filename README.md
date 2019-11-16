@@ -3,12 +3,14 @@
 > Fast, reliable and intuitive object mapping.
 
 [![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
+[![Build Status][circleci-image]][circleci-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 [![GitHub stars][stars-image]][stars-url]
 [![Known Vulnerabilities][vulnerabilities-image]][vulnerabilities-url]
 [![GitHub issues][issues-image]][issues-url]
 [![Awesome][awesome-image]][awesome-url]
+[![install size][install-size-image]][install-size-url]
+[![gzip size][gzip-size-image]][gzip-size-url]
 
 
 ![](mapper-js.png)
@@ -319,7 +321,7 @@ const mapping = mapper.mapping((map) => ({
   'address': map.get('person.address').value,
 }));
 
-mapper(source, mapping, { suppressNullUndefined: true );
+mapper(source, mapping, { suppressNullUndefined: true });
 /* outputs 
 {
   name: 'John',
@@ -381,11 +383,12 @@ mapper(source, mapping, { suppressionStrategy: customSuppressionStrategy );
 
 
 <!-- Markdown link & img dfn's -->
+
 [npm-image]: https://img.shields.io/npm/v/@arg-def/mapper-js.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@arg-def/mapper-js
 [npm-downloads]: https://img.shields.io/npm/dm/@arg-def/mapper-js.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
+[circleci-image]: https://circleci.com/gh/arg-def/mapper-js.svg?style=svg
+[circleci-url]: https://circleci.com/gh/arg-def/mapper-js
 [stars-image]: https://img.shields.io/github/stars/arg-def/mapper-js.svg
 [stars-url]: https://github.com/arg-def/mapper-js/stargazers
 [vulnerabilities-image]: https://snyk.io/test/github/arg-def/mapper-js/badge.svg
@@ -394,3 +397,7 @@ mapper(source, mapping, { suppressionStrategy: customSuppressionStrategy );
 [issues-url]: https://github.com/arg-def/mapper-js/issues
 [awesome-image]: https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg
 [awesome-url]: https://github.com/themgoncalves/react-loadable-ssr-addon
+[install-size-image]: https://packagephobia.now.sh/badge?p=@arg-def/mapper-js
+[install-size-url]: https://packagephobia.now.sh/result?p=@arg-def/mapper-js
+[gzip-size-image]: http://img.badgesize.io/https://unpkg.com/@arg-def/mapper-js/lib/mapper-js.min.js?compression=gzip
+[gzip-size-url]: https://unpkg.com/@arg-def/mapper-js/lib/mapper-js.min.js

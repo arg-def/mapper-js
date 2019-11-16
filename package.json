@@ -13,6 +13,7 @@
     "release": "standard-version",
     "commit": "npx git-cz",
     "build": "npm run clean && babel src -d lib --extensions '.ts' --ignore '**/*.test.ts' && tsc --declaration --emitDeclarationOnly",
+    "postbuild": "rollup --config",
     "clean": "rm -rf lib",
     "test": "jest --no-cache",
     "test:watch": "jest --watch",
@@ -67,6 +68,10 @@
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "prettier": "1.19.1",
+    "rollup": "^1.27.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
     "standard-version": "^7.0.0",
     "ts-jest": "^24.1.0",
     "typescript": "^3.7.2"
