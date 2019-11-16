@@ -1,4 +1,4 @@
-# @args-def/mapper-js
+# @arg-def/mapper-js
 
 > Fast, reliable and intuitive object mapping.
 
@@ -66,7 +66,7 @@ At this step, we need to create our `mapping` against our data `source`.
 
 We will be using `dot notation` to create our `final structure`.
 
-> For more info about `dot notation` API, check out the [documentation](https://github.com/arg-def/dot-notation)
+> For more info about `dot notation` API, check out the [documentation](https://github.com/arg-def/mapper-js)
 
 With `mapper`, it is possible to `get` _one_ or _several_ values from our `source`
 and even `transform` it in the way we need.
@@ -139,20 +139,22 @@ const result = mapper(source, mapping);
 
 # API Documentation
 
-
 ## mapper
 
 **Type:** `function()`
-**Parameter:** `source, mapping`
+**Parameter:** `source: object, mapping: IMapping, options?: IMapperOptions`
 **Signature:** `(callback: (map: IMap) => IMapping): Function => callback`
 
 **Description:** 
 
   `mapper()` mappes your _source data_ against your _mapping_.
 
+  It accepts an extra (_optional_) argument defining the [_global mapping options_](#mapper-options).
+
 Example:
+
 ```js
-mapper(source, mapping);
+mapper(source, mapping, options);
 
 /* outputs 
 {
@@ -189,16 +191,16 @@ ___
 Example:
 ```js
 // raw definition
-const mapping = mapper.mapping((map) => {
+const mapping = mapper.mapping((map) => ({
     ...
-});
+}));
 
 // with map() query
-const mapping = mapper.mapping((map) => {
+const mapping = mapper.mapping((map) => ({
   'employee.name': map.get('person.name.firstName').value,
   'employee.age': map.get('person.name.age').value,
   'employee.address': map.get('person.address').value,
-});
+}));
 
 
 ```
@@ -213,17 +215,20 @@ ___
 #### `get`
 
 **Type:** `function`
-**Parameter:** `string|string[]` 
+**Parameter:** `paths: string|string[], option?: IMapperOptions` 
 **Signature:** `<T>(key: string | string[]) => IMap;`
 
 **Description:** 
 
   `.get` method retrieves values from your _source data_ using `dot notation` path, it accepts a string or array of string.
 
+  It accepts an extra (_optional_) argument to define the [_mapping options for current entry_](#mapper-options), _overriding_ the _global mapping options_.
+
 Example:
 ```js
 map.get('person.name.firstName');
 map.get(['person.name.firstName', 'person.name.lastName']);
+map.get(['person.name.firstName', 'person.name.lastName'], options);
 ```
 
 
@@ -259,7 +264,6 @@ map.get(['person.name.firstName', 'person.name.lastName'])
 
   `.value` returns the value of your `dot notation` query. If transformed, returns the transformed value.
 
-
 Example:
 ```js
 // single value
@@ -274,17 +278,119 @@ map.get(['person.name.firstName', 'person.name.lastName'])
 ```
 
 
+## Mapper Options
+
+### defaults
+
+```js
+{
+  suppressNullUndefined: false,
+  suppressionStrategy: () => false,
+}
+```
+
+### Details
+
+**`suppressNullUndefined`**
+
+**Type:** `boolean`
+**default value:** `false`
+
+**Description:** 
+
+  Removes `null` or `undefined` entries from the _mapped_ object.
+
+Example:
+```js
+/* source object
+{
+  person: {
+    name: 'John',
+    lastName: 'Doe',
+    age: 32,
+  },
+}
+*/
+const mapping = mapper.mapping((map) => ({
+  'name': map.get('person.name').value,
+  'age': map.get('person.age').value,
+   // source doesn't have propery 'address',
+   // therefore will return "undefined"
+  'address': map.get('person.address').value,
+}));
+
+mapper(source, mapping, { suppressNullUndefined: true );
+/* outputs 
+{
+  name: 'John',
+  age: 32,
+}
+*/
+
+```
+
+
+**`suppressionStrategy`**
+
+**Type:** `function`
+**Parameter:** `value: unknown`
+**Signature:** `(value: unknown) => boolean`
+
+**Description:** 
+
+  Defines a _custom strategy_ to suppress entries from the _mapped object_.
+
+Example:
+```js
+/* source object
+{
+  person: {
+    name: 'John',
+    lastName: 'Doe',
+    age: 32,
+    addres: {
+      street: 'Infinite Loop',
+      city: 'Cupertino',
+      state: 'CA',
+      postalCode: 95014,
+      country: 'United States',
+    }
+  },
+}
+*/
+
+const customSuppressionStrategy = (address: ISource): boolean => address && address.city === 'Cupertino';
+
+const mapping = mapper.mapping((map) => ({
+  'name': map.get('person.name').value,
+  'age': map.get('person.age').value,
+   // source doesn't have propery 'address',
+   // therefore will return "undefined"
+  'address': map.get('person.address').value,
+}));
+
+mapper(source, mapping, { suppressionStrategy: customSuppressionStrategy );
+/* outputs 
+{
+  name: 'John',
+  age: 32,
+}
+*/
+
+```
+
+
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/@arg-def/mapper-js.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@arg-def/mapper-js
 [npm-downloads]: https://img.shields.io/npm/dm/@arg-def/mapper-js.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[stars-image]: https://img.shields.io/github/stars/args-def/dot-notation.svg
-[stars-url]: https://github.com/args-def/dot-notation/stargazers
-[vulnerabilities-image]: https://snyk.io/test/github/args-def/dot-notation/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/args-def/dot-notation
-[issues-image]: https://img.shields.io/github/issues/args-def/dot-notation.svg
-[issues-url]: https://github.com/args-def/dot-notation/issues
+[stars-image]: https://img.shields.io/github/stars/arg-def/mapper-js.svg
+[stars-url]: https://github.com/arg-def/mapper-js/stargazers
+[vulnerabilities-image]: https://snyk.io/test/github/arg-def/mapper-js/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/arg-def/mapper-js
+[issues-image]: https://img.shields.io/github/issues/arg-def/mapper-js.svg
+[issues-url]: https://github.com/arg-def/mapper-js/issues
 [awesome-image]: https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg
 [awesome-url]: https://github.com/themgoncalves/react-loadable-ssr-addon
