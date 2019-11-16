@@ -49,7 +49,7 @@ describe('mapper()', () => {
         .get<string>('person.name')
         .transform<ISource, string>(([{ firstName, lastName }]) => kebabCase(`${firstName} ${lastName}`)).value,
       'person.name': map.get<string>('person.name.firstName').value,
-      'person.lastName': map.get<string>('person.lastName').value,
+      'person.lastName': map.get<string>('person.name.lastName').value,
       address: map.get<object[]>('person.address').value,
       defaultAddress: map.get<object>('person.address[0]').value,
     }));
@@ -58,12 +58,38 @@ describe('mapper()', () => {
       id: kebabCase(`${source.person.name.firstName} ${source.person.name.lastName}`),
       person: {
         name: source.person.name.firstName,
-        lastName: source.person.lastName,
+        lastName: source.person.name.lastName,
       },
       address: source.person.address,
       defaultAddress: source.person.address[0],
     };
 
     expect(mapper(source, mapping)).toStrictEqual(expectedMap);
+  });
+
+  describe('behaviour as per configuration', () => {
+    it('should remove null/undefined values from mapping', () => {
+      const suppressionStrategy = (address: ISource): boolean => address && address.postalCode === 95014;
+
+      const mapping = mapper.mapping((map: IMap) => ({
+        'person.name': map.get<string>('person.name.firstName').value,
+        'person.age': map.get<string>('person.age').value,
+        'person.gender': map.get<string>('person.gender', { suppressNullUndefined: false }).value,
+        address: map.get<string>('person.address[0]', { suppressionStrategy }).value,
+        businessAddress: map.get<string>('person.address[2]', { suppressionStrategy, suppressNullUndefined: false })
+          .value,
+        deliveryAddress: map.get<string>('person.address[3]', { suppressionStrategy }).value,
+      }));
+
+      const expectedMap = {
+        person: {
+          name: source.person.name.firstName,
+          gender: undefined as string,
+        },
+        businessAddress: undefined as object,
+      };
+
+      expect(mapper(source, mapping, { suppressNullUndefined: true })).toStrictEqual(expectedMap);
+    });
   });
 });

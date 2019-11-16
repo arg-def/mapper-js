@@ -10,3 +10,8 @@ export interface IMapping {
 export interface IMapper {
   [key: string]: any;
 }
+
+export interface IMapperOptions {
+  suppressNullUndefined?: boolean;
+  suppressionStrategy?: (value: unknown) => boolean;
+}

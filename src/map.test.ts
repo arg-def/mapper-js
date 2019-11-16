@@ -1,5 +1,5 @@
 import { ISource } from './interfaces';
-import map from './map';
+import map, { MAP_SUPPRESS_ENTRY } from './map';
 
 const source: ISource = {
   person: {
@@ -33,6 +33,20 @@ describe('map()', () => {
     expect(map(source).get('person.address[0].street').value).toEqual(source.person.address[0].street);
   });
 
+  it('should map non existent values from source', () => {
+    expect(map(source).get('person.age').value).toEqual(undefined);
+  });
+
+  it('should flag to suppress null/undefined values', () => {
+    expect(map(source).get('person.age', { suppressNullUndefined: true }).value).toEqual(MAP_SUPPRESS_ENTRY);
+  });
+
+  it('should flag to suppress with custom suppression strategy', () => {
+    const suppressionStrategy = (value: unknown): boolean => value === 'John';
+
+    expect(map(source).get('person.name.firstName', { suppressionStrategy }).value).toEqual(MAP_SUPPRESS_ENTRY);
+  });
+
   it('should map and transform values', () => {
     expect(
       map(source)
@@ -43,7 +57,7 @@ describe('map()', () => {
     expect(
       map(source)
         .get<ISource>('person.address[0]')
-        .transform<ISource, string>(([address]) => address.postalCode).value,
+        .transform<ISource, number>(([address]) => address.postalCode).value,
     ).toEqual(source.person.address[0].postalCode);
   });
 
