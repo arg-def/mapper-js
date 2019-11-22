@@ -15,6 +15,12 @@
 
 ![](mapper-js.png)
 
+## Demo
+
+Play around with _mapper-js_ and experience **the magic**!
+
+[![Edit @arg-def/mapper-js](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/arg-defmapper-js-pyyy0?fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.ts&theme=dark)
+
 ## Installation
 
 ```sh
