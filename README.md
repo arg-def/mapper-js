@@ -91,7 +91,7 @@ the selected values as array in the `parameter`.
 Now let's create our `mapping`!
 
 ```js
-import mapper from '@arg-def/mapper-js'
+import mapper from '@arg-def/mapper-js';
 
 ...
 
@@ -113,7 +113,7 @@ const mapping = mapper.mapping((map) => ({
 ### 3) Create your mapped object
 
 ```js
-import mapper from '@arg-def/mapper-js'
+import mapper from '@arg-def/mapper-js';
 ...
 
 const result = mapper(source, mapping);
@@ -161,7 +161,7 @@ const result = mapper(source, mapping);
 
 Example:
 
-```js
+```ts
 mapper(source, mapping, options);
 
 /* outputs 
@@ -197,7 +197,7 @@ ___
   It accepts `dot notation` path as `key`.
 
 Example:
-```js
+```ts
 // raw definition
 const mapping = mapper.mapping((map) => ({
     ...
@@ -233,7 +233,7 @@ ___
   It accepts an extra (_optional_) argument to define the [_mapping options for current entry_](#mapper-options), _overriding_ the _global mapping options_.
 
 Example:
-```js
+```ts
 map.get('person.name.firstName');
 map.get(['person.name.firstName', 'person.name.lastName']);
 map.get(['person.name.firstName', 'person.name.lastName'], options);
@@ -253,7 +253,7 @@ map.get(['person.name.firstName', 'person.name.lastName'], options);
   `.transform` provides you as parameter, an `array` with the retrieved values in the **same order** as defined in the `get` method.
 
 Example:
-```js
+```ts
 // single value
 map.get('person.name.firstName')
    .transform(([firstName]) => firstName.toLoweCase());
@@ -273,7 +273,7 @@ map.get(['person.name.firstName', 'person.name.lastName'])
   `.value` returns the value of your `dot notation` query. If transformed, returns the transformed value.
 
 Example:
-```js
+```ts
 // single value
 map.get('person.name.firstName')
    .transform(([firstName]) => firstName.toLoweCase())
@@ -309,7 +309,7 @@ map.get(['person.name.firstName', 'person.name.lastName'])
   Removes `null` or `undefined` entries from the _mapped_ object.
 
 Example:
-```js
+```ts
 /* source object
 {
   person: {
@@ -322,7 +322,7 @@ Example:
 const mapping = mapper.mapping((map) => ({
   'name': map.get('person.name').value,
   'age': map.get('person.age').value,
-   // source doesn't have propery 'address',
+   // source doesn't have property 'address',
    // therefore will return "undefined"
   'address': map.get('person.address').value,
 }));
@@ -349,14 +349,14 @@ mapper(source, mapping, { suppressNullUndefined: true });
   Defines a _custom strategy_ to suppress entries from the _mapped object_.
 
 Example:
-```js
+```tsx
 /* source object
 {
   person: {
     name: 'John',
     lastName: 'Doe',
     age: 32,
-    addres: {
+    address: {
       street: 'Infinite Loop',
       city: 'Cupertino',
       state: 'CA',
@@ -372,8 +372,6 @@ const customSuppressionStrategy = (address: ISource): boolean => address && addr
 const mapping = mapper.mapping((map) => ({
   'name': map.get('person.name').value,
   'age': map.get('person.age').value,
-   // source doesn't have propery 'address',
-   // therefore will return "undefined"
   'address': map.get('person.address').value,
 }));
 
