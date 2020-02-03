@@ -1,5 +1,4 @@
-import { ISource } from './interfaces';
-import { IMap } from './map';
+import { ISource, IMap } from './interfaces';
 import mapper from './mapper';
 
 const kebabCase = (str: string) =>
@@ -8,7 +7,7 @@ const kebabCase = (str: string) =>
     .replace(/\s+/g, '-')
     .toLowerCase();
 
-const source: ISource = {
+const source = {
   person: {
     name: {
       firstName: 'John',
@@ -36,23 +35,33 @@ const source: ISource = {
 describe('mapper()', () => {
   it('should throw an error when source type is not an object', () => {
     const mapping = mapper.mapping((map: IMap) => ({
-      address: map.get<object[]>('person.address').value,
+      address: map<object[]>('person.address').value,
       active: true,
     }));
 
-    expect(() => mapper([], mapping)).toThrow(TypeError);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(() => mapper([] as any, mapping)).toThrow(TypeError);
   });
 
   it('should map source against mapping definitions', () => {
     const mapping = mapper.mapping((map: IMap) => ({
-      id: map
-        .get<string>('person.name')
-        .transform<ISource, string>(([{ firstName, lastName }]) => kebabCase(`${firstName} ${lastName}`)).value,
-      'person.name': map.get<string>('person.name.firstName').value,
-      'person.lastName': map.get<string>('person.name.lastName').value,
-      address: map.get<object[]>('person.address').value,
-      defaultAddress: map.get<object>('person.address[0]').value,
+      id: map<string>('person.name').transform(({ firstName, lastName }) => kebabCase(`${firstName} ${lastName}`))
+        .value,
+      'person.name': map<string>('person.name.firstName').value,
+      'person.lastName': map<string>('person.name.lastName').value,
+      address: map<object[]>('person.address').value,
+      defaultAddress: map<object>('person.address[0]').value,
     }));
+
+    interface IExpected {
+      id: string;
+      person: {
+        name: string;
+        lastName: string;
+      };
+      address: object;
+      defaultAddress: object;
+    }
 
     const expectedMap = {
       id: kebabCase(`${source.person.name.firstName} ${source.person.name.lastName}`),
@@ -64,22 +73,29 @@ describe('mapper()', () => {
       defaultAddress: source.person.address[0],
     };
 
-    expect(mapper(source, mapping)).toStrictEqual(expectedMap);
+    expect(mapper<IExpected>(source, mapping)).toStrictEqual(expectedMap);
   });
 
   describe('behaviour as per configuration', () => {
     it('should remove null/undefined values from mapping', () => {
-      const suppressionStrategy = (address: ISource): boolean => address && address.postalCode === 95014;
+      const suppressionStrategy = (address: ISource<number>): boolean => address && address.postalCode === 95014;
 
       const mapping = mapper.mapping((map: IMap) => ({
-        'person.name': map.get<string>('person.name.firstName').value,
-        'person.age': map.get<string>('person.age').value,
-        'person.gender': map.get<string>('person.gender', { suppressNullUndefined: false }).value,
-        address: map.get<string>('person.address[0]', { suppressionStrategy }).value,
-        businessAddress: map.get<string>('person.address[2]', { suppressionStrategy, suppressNullUndefined: false })
-          .value,
-        deliveryAddress: map.get<string>('person.address[3]', { suppressionStrategy }).value,
+        'person.name': map<string>('person.name.firstName').value,
+        'person.age': map<string>('person.age').value,
+        'person.gender': map<string>('person.gender', { suppressNullUndefined: false }).value,
+        address: map<string>('person.address[0]', { suppressionStrategy }).value,
+        businessAddress: map<string>('person.address[2]', { suppressionStrategy, suppressNullUndefined: false }).value,
+        deliveryAddress: map<string>('person.address[3]', { suppressionStrategy }).value,
       }));
+
+      interface IExpected {
+        person: {
+          name: string;
+          gender: string;
+        };
+        businessAddress: object;
+      }
 
       const expectedMap = {
         person: {
@@ -89,7 +105,9 @@ describe('mapper()', () => {
         businessAddress: undefined as object,
       };
 
-      expect(mapper(source, mapping, { suppressNullUndefined: true })).toStrictEqual(expectedMap);
+      expect(
+        mapper<IExpected>(source, mapping, { suppressNullUndefined: true }),
+      ).toStrictEqual(expectedMap);
     });
   });
 });

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@arg-def/dot-notation@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@arg-def/dot-notation/-/dot-notation-0.1.4.tgz#3d9ac1140ca6a79168f68aa0a8fb857343af5290"
-  integrity sha512-Bs1jd228+CSgO+463HD8ej2stIDeVqbh9At17m2CoWYEgCo8MZx62qORAAvyzSyyOol1qm4jELwOy/xVDV1ETw==
+"@arg-def/dot-notation@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@arg-def/dot-notation/-/dot-notation-0.1.5.tgz#f82d07a692c5743ac814efe44a70ebca376da6d7"
+  integrity sha512-hnFZn+aatnbs7lXKSMJcrgVS+FV1BX5auUOCx6/ehuTmEOtDkILlnUjysXjnDnts+v/nRf0r8YrAnO/SWkd5pQ==
 
 "@babel/cli@^7.8.4":
   version "7.8.4"
