@@ -1,4 +1,4 @@
-import toArray from './to-array';
+import toArray from '../to-array';
 
 describe('utils/toArray()', () => {
   it('should convert non array value to array', () => {

@@ -19,7 +19,7 @@ const map = (source: ISource<unknown>, mapperOptions?: IMapperOptions): IMap => 
   key: string | string[],
   options?: IMapperOptions,
 ): IMapMethods<T> => {
-  const MAP_SETTINGS = { ...defaultOptions, ...mapperOptions, ...options };
+  const SETTINGS = { ...defaultOptions, ...mapperOptions, ...options };
   const MAP_KEYS = toArray(key).map(k => pick(k, source));
   let MAP_VALUE = MAP_KEYS.length > 1 ? MAP_KEYS : MAP_KEYS[0];
 
@@ -30,7 +30,7 @@ const map = (source: ISource<unknown>, mapperOptions?: IMapperOptions): IMap => 
       return this as IMapMethods<T>;
     },
     get value(): T {
-      const { suppressNullUndefined, suppressionStrategy } = MAP_SETTINGS;
+      const { suppressNullUndefined, suppressionStrategy } = SETTINGS;
       const storedValue = MAP_VALUE;
 
       MAP_KEYS.length = 0;

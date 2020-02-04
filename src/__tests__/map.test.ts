@@ -1,4 +1,4 @@
-import map, { MAP_SUPPRESS_ENTRY } from './map';
+import map, { MAP_SUPPRESS_ENTRY } from '../map';
 
 const source = {
   person: {

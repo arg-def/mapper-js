@@ -1,6 +1,6 @@
-import { MAP_SUPPRESS_ENTRY } from '../map';
+import { MAP_SUPPRESS_ENTRY } from '../../map';
 
-import suppress from './suppress-entries';
+import suppress from '../suppress-entries';
 
 describe('utils/suppressEntries()', () => {
   it('should suppress flagged entries', () => {

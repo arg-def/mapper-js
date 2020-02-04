@@ -1,5 +1,5 @@
-import { ISource, IMap } from './interfaces';
-import mapper from './mapper';
+import { ISource, IMap } from '../interfaces';
+import mapper from '../mapper';
 
 const kebabCase = (str: string) =>
   str
