@@ -1,6 +1,6 @@
 {
   "name": "@arg-def/mapper-js",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "Fast, reliable and intuitive object mapping.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

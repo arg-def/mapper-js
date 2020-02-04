@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/arg-def/mapper-js/compare/v0.1.3...v1.0.0) (2020-02-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** **`.get()` method deprecated**!: instead use `map()`. E.g. `map.get('person.name')` becomes -> `map('person.name)`
+
+### Features
+
+* **api:** improves mapper API and typescript syntax usage ([#2](https://github.com/arg-def/mapper-js/issues/2)) ([5814ccb](https://github.com/arg-def/mapper-js/commit/5814ccb36ad4645598bbfed4a2004449891c7e83))
+
 ### [0.1.3](https://github.com/arg-def/mapper-js/compare/v0.1.2...v0.1.3) (2019-11-16)
 
 
