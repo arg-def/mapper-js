@@ -1,7 +1,6 @@
 /* eslint-disable filenames/match-exported */
-import { IMap } from './map';
 import mapper from './mapper';
-import { ISource, IMapper, IMapping } from './interfaces';
+import { ISource, IMap, IMapping, IMapperOptions } from './interfaces';
 
-export { ISource, IMapper, IMapping, IMap };
+export { ISource, IMapperOptions, IMapping, IMap };
 export default mapper;

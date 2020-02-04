@@ -77,7 +77,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "@arg-def/dot-notation": "^0.1.4"
+    "@arg-def/dot-notation": "^0.1.5"
   },
   "config": {
     "commitizen": {

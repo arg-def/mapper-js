@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export interface ISource {
-  [index: string]: any;
+export interface ISource<T> {
+  [index: string]: T | ISource<T>;
 }
 
-export interface IMapping {
-  [index: string]: string | number | boolean | undefined | string[] | number[] | boolean[] | object[] | object | null;
+export type IMap = <T>(key: string | string[], options?: IMapperOptions) => IMapMethods<T>;
+
+export interface IMapMethods<T> {
+  transform: (callback: (...args: unknown[]) => T) => IMapMethods<T>;
+  value: T;
 }
 
-export interface IMapper {
-  [key: string]: any;
-}
+export type IMapping = (map: IMap) => ISource<unknown>;
 
 export interface IMapperOptions {
   suppressNullUndefined?: boolean;
