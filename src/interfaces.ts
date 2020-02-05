@@ -5,7 +5,7 @@ export interface ISource<T> {
 export type IMap = <T>(key: string | string[], options?: IMapperOptions) => IMapMethods<T>;
 
 export interface IMapMethods<T> {
-  transform: (callback: (...args: unknown[]) => T) => IMapMethods<T>;
+  transform: (callback: (...args: any[]) => T) => IMapMethods<T>;
   value: T;
 }
 
