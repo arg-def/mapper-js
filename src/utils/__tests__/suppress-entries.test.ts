@@ -1,5 +1,4 @@
 import { MAP_SUPPRESS_ENTRY } from '../../map';
-
 import suppress from '../suppress-entries';
 
 describe('utils/suppressEntries()', () => {
