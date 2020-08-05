@@ -4,8 +4,11 @@
 
 In this process, there was a _**breaking change**_ in the API and therefore is recommended you to [read the documentation](https://github.com/the-cookbook/mapper-js#how-to-use).
 
+
 #### Got no time for this?
-> Short summary about the breaking changes
+
+<details>
+  <summary>Short summary about the breaking changes</summary>
 
 Before:
 
@@ -44,6 +47,8 @@ After:
   omitStrategy: () => false,
 }
 ```
+</details>
+
 -------
 
 # @arg-def/mapper-js
