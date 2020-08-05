@@ -1,3 +1,51 @@
+## NOTICE
+
+**`@arg-def/mapper-js` has been move to [`@cookbook/mapper-js`](https://github.com/the-cookbook/mapper-js)**
+
+In this process, there was a _**breaking change**_ in the API and therefore is recommended you to [read the documentation](https://github.com/the-cookbook/mapper-js#how-to-use).
+
+#### Got no time for this?
+> Short summary about the breaking changes
+
+Before:
+
+```js
+import mapper from '@arg-def/mapper-js';
+
+const mapping = mapper.mapping((map) => ({ ... }));
+const result = mapper(source, mapping);
+```
+
+After:
+
+```js
+import mapper from '@cookbook/mapper-js';
+
+const mapping = mapper((map) => ({ ... }));
+
+const result = mapping(source);
+```
+
+**Mapper Options**
+
+Before:
+
+```js
+{
+  suppressNullUndefined: false,
+  suppressionStrategy: () => false,
+}
+```
+
+After:
+```js
+{
+  omitNullUndefined: false,
+  omitStrategy: () => false,
+}
+```
+-------
+
 # @arg-def/mapper-js
 
 > Fast, reliable and intuitive object mapping.
